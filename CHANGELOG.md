@@ -1,3 +1,4 @@
+![Beeladybug](promo-440x280-dark.png)
 # Changelog
 
 All notable changes to the Firefox build of BeeLadybug are documented in this file.
