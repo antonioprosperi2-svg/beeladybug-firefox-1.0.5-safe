@@ -1,9 +1,12 @@
-![alt text](promo-1400x560-dark.png)
+![BeeLadybug](promo-1400x560-dark.png)
+
 # BeeLadybug
 
-Inspect layout and CSS problems on the page you are looking at, then download an HTML report. BeeLadybug is a Manifest V3 extension. This repository is the Firefox build, version 1.0.5.
+BeeLadybug for Mozilla Firefox. Version 1.0.5. Manifest V3.
 
-The listing on Firefox Add-ons is currently in review.
+Inspect layout and CSS problems on the page you are looking at, then download an HTML report. This repository is the Mozilla add-on: Firefox loads `src/`, and the listing on Firefox Add-ons (addons.mozilla.org) is currently in review.
+
+Firefox 142.0 is the minimum (`strict_min_version` in `src/manifest.json`). The add-on id is `beeladybug-hud@beeenginejs.com`. `data_collection_permissions` is `none`.
 
 ## What it finds
 
@@ -40,7 +43,7 @@ When the page has a `<canvas>` that is not one of BeeLadybug's overlays, the HUD
 
 ## How to use
 
-1. Open the page you want to inspect. BeeLadybug can run only on a normal site. It refuses `chrome://`, `chrome-extension://`, `edge://`, `about:`, `devtools:`, `view-source:`, `chrome.google.com`, and `chromewebstore.google.com`. On those pages the popup stays open and shows: "Questa pagina non si può ispezionare (chrome://, Chrome Web Store o un'altra pagina protetta). Aprilo su un sito normale."
+1. Open a normal website in Firefox. The add-on does not inspect Firefox internal pages. The popup status line on those pages still names Chrome. See [What the popup shows](#what-the-popup-shows).
 2. Click the BeeLadybug toolbar icon, then click **Attiva/Disattiva HUD**. The popup injects the scripts into that tab and closes. Click the icon and the same button again to remove the HUD.
 3. Read the panel on the page. **STATUS** shows frame rate and the simulated clock. **ISSUES** lists causes found while you hover, or after a scan. **INSPECT** shows the findings for the element under the pointer. **EVENTS** is the log. On a normal page, DOM and CSS start on. Move the pointer to see the box model. Press **S** to scan the whole page (this is ignored while you are typing in a field). Press **P** to pin the current element. **F6** turns the CSS hunt on or off. **F2** hides or shows the overlay. Drag the panel, or use **WIDE** and **PILL** to resize it. On a page with a canvas, the canvas view starts first. Use the **DOM** and **F6 CSS** buttons to turn the other inspectors on.
 4. Export the HTML report. Click **F8 EXPORT** or press **F8**. The tab downloads `report-YYYYMMDD-HHMM.html`. The file is built in the page. It contains the URL, the viewport, the log, and a snapshot from each attached inspector. The CSS snapshot runs even when the live hunt is off. Info rows stay hidden until you click "mostra info (N)". Severity buttons filter the tables.
@@ -50,6 +53,22 @@ When the page has a `<canvas>` that is not one of BeeLadybug's overlays, the HUD
 The panel markup still has an Ask AI button. This build hides it. No assistant is registered.
 
 Space, Arrow Up, Arrow Down, Arrow Left, and Arrow Right do not activate a focused HUD button. A click on a HUD button blurs it, so the next Space key goes to the page.
+
+## What the popup shows
+
+The button in `src/popup.html` is **Attiva/Disattiva HUD**. That label does not name Chrome, Edge, or Firefox.
+
+On a page the add-on will not inspect, `src/popup.js` leaves the popup open and writes this sentence into the status line:
+
+> Questa pagina non si può ispezionare (chrome://, Chrome Web Store o un'altra pagina protetta). Aprilo su un sito normale.
+
+That sentence names Chrome. The function `blockedUrl` shows it when the address starts with `chrome:`, `chrome-extension:`, `edge:`, `about:`, `devtools:`, or `view-source:`, and when the host is `chrome.google.com` or `chromewebstore.google.com`.
+
+In Firefox the pages this stops are `about:` pages, including `about:debugging`, `about:config`, and `about:addons`. Firefox does not open its own screens on `chrome://` or `edge://`. Those prefixes sit in the same check so an internal page is refused if the address uses them. The words "Chrome Web Store" appear only in that status sentence.
+
+The zip already sent to Mozilla contains this sentence. A different wording needs a new package. This page describes the popup in that package.
+
+The script calls `chrome.tabs.query` and `chrome.scripting.executeScript`. In a Firefox Manifest V3 add-on, `chrome` is the WebExtensions API name Firefox provides, next to `browser`. That name is not drawn in the popup. The only Chrome words a person can read are in the status sentence above.
 
 ## Test it on Firefox
 
@@ -71,7 +90,7 @@ Firefox 142.0 is the minimum in `src/manifest.json` (`strict_min_version`).
 The manifest asks for two permissions:
 
 - **`activeTab`.** After you click the toolbar icon, Firefox grants access to the tab you are looking at. The extension does not run on other tabs, and it does not run until you click it.
-- **`scripting`.** The popup uses `chrome.scripting.executeScript` to inject `entity-bridge.js` and then `content.js` into that tab. Both files run in the page's main JavaScript world (`world: "MAIN"`), so the bridge can read `window.__BEE_ENTITIES__` when a game exposes it.
+- **`scripting`.** The popup calls `chrome.scripting.executeScript`. Firefox provides that method on the `chrome` namespace. The call injects `entity-bridge.js` and then `content.js` into that tab. Both files run in the page's main JavaScript world (`world: "MAIN"`), so the bridge can read `window.__BEE_ENTITIES__` when a game exposes it.
 
 There are no host permissions and no `storage` permission. The panel remembers its size and position in that page's `localStorage`, under the key `bee-ladybug.panel`. The HTML report is a local download. Entity data is posted to the same window with `postMessage`. The HUD accepts that message only when `event.source` is the same window.
 
@@ -79,7 +98,7 @@ BeeLadybug does not send page content, reports, or entity data to any server.
 
 ## Why this Firefox version is different from Chrome
 
-Mozilla reviews the add-on for unsafe DOM writes and for a data-collection declaration. Two files were adapted for that review. `popup.html`, `popup.js`, `entity-bridge.js`, and `content.src.js` match the Chrome 1.0.5 package.
+Mozilla reviews the add-on for unsafe DOM writes and for a data-collection declaration. `src/manifest.json` and `src/content.js` were adapted for that review. `src/popup.html` and `src/popup.js` were not rewritten, so the blocked-page sentence still says Chrome and the URL check still includes `edge:`. See [What the popup shows](#what-the-popup-shows). `entity-bridge.js` and `content.src.js` are the same files as in the Chrome 1.0.5 package.
 
 ### `src/manifest.json`
 
@@ -109,7 +128,7 @@ This is a plain JavaScript extension. There is no `package.json` and no build st
 | --- | --- |
 | `src/manifest.json` | Manifest V3 entry. Name, version 1.0.5, `activeTab` and `scripting`, the popup, the icons, and the Firefox `gecko` settings. |
 | `src/popup.html` | The small popup. One button, **Attiva/Disattiva HUD**, and a status line. Styles are in the page. |
-| `src/popup.js` | Checks that the tab can be inspected, injects the two page scripts, then closes the popup. Clicking again removes the HUD. |
+| `src/popup.js` | Checks that the tab can be inspected, injects the two page scripts, then closes the popup. On a blocked page it shows the Italian sentence that names `chrome://` and the Chrome Web Store. Clicking again removes the HUD. |
 | `src/content.js` | The script Firefox injects. It contains the HUD, the DOM, CSS, and canvas inspectors, the HTML report, and the on/off boot. The HUD is built with `createElement`, `textContent`, and `replaceChildren`. |
 | `src/content.src.js` | The extension boot written as an ES module (`pagePlan`, entity messages, hiding the Ask button). It imports the engine from `../src/index.js`, which is not in this repository. The popup injects `content.js`, not this file. |
 | `src/entity-bridge.js` | Runs in the page. Copies `window.__BEE_ENTITIES__` into a `postMessage` every 100ms. |
