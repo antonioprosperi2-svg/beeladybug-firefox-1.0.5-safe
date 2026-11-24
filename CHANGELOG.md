@@ -12,7 +12,7 @@ Git history for this repository is a single commit, `first commit` (2026-11-23).
 ### Added
 
 - Firefox Manifest V3 settings under `browser_specific_settings.gecko` in `src/manifest.json`.
-- Extension id `beeladybug-inspector@beeenginejs.com`.
+- Extension id `beeladybug-hud@beeenginejs.com`.
 - `strict_min_version` set to `142.0`.
 - `data_collection_permissions.required` set to `["none"]`, declaring that the add-on collects no data.
 

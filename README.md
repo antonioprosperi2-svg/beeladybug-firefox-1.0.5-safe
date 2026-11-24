@@ -84,7 +84,7 @@ Mozilla reviews the add-on for unsafe DOM writes and for a data-collection decla
 
 The Firefox manifest adds `browser_specific_settings.gecko`:
 
-- **`id`:** `beeladybug-inspector@beeenginejs.com`
+- **`id`:** `beeladybug-hud@beeenginejs.com`
 - **`strict_min_version`:** `142.0`
 - **`data_collection_permissions.required`:** `["none"]`
 
