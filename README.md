@@ -1,3 +1,4 @@
+![BUG](promo-1400x560-dark.png)
 # BeeLadybug
 
 Inspect layout and CSS problems on the page you are looking at, then download an HTML report. BeeLadybug is a Manifest V3 extension. This repository is the Firefox build, version 1.0.5.
