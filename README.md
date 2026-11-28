@@ -1,10 +1,10 @@
 ![BeeLadybug](promo-1400x560-dark.png)
+[![Firefox Add-ons](https://img.shields.io/amo/v/beeladybug-inspector?label=Firefox%20Add-ons&logo=firefox-browser)](https://addons.mozilla.org/it/firefox/addon/beeladybug-inspector/)
+[![Firefox users](https://img.shields.io/amo/users/beeladybug-inspector?label=users&logo=firefox-browser)](https://addons.mozilla.org/it/firefox/addon/beeladybug-inspector/)
 [![Version](https://img.shields.io/badge/version-1.0.5-2ea44f)](https://github.com/antonioprosperi2-svg/beeladybug-firefox-1.0.5-safe/blob/main/src/manifest.json)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/antonioprosperi2-svg/beeladybug-firefox-1.0.5-safe)](https://github.com/antonioprosperi2-svg/beeladybug-firefox-1.0.5-safe/releases/tag/v1.0.5)
 [![npm engine](https://img.shields.io/npm/v/bee-ladybug?label=engine%20on%20npm&color=red)](https://www.npmjs.com/package/bee-ladybug)
 [![Vanilla JS](https://img.shields.io/badge/vanilla-JavaScript-f7df1e?logo=javascript&logoColor=black)](https://github.com/antonioprosperi2-svg/beeladybug-firefox-1.0.5-safe/blob/main/src/content.js)
-
 [![Changelog](https://img.shields.io/badge/changelog-v1.0.5-blue)](https://github.com/antonioprosperi2-svg/beeladybug-firefox-1.0.5-safe/blob/main/CHANGELOG.md)
 [![View sample report](https://img.shields.io/badge/View%20sample%20report-HTML-ff3b5c?style=flat)](https://beeenginejs.com/wp-content/uploads/2026/11/report-20261122-1736.html)
 # BeeLadybug
